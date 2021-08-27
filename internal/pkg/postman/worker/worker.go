@@ -7,9 +7,9 @@ import (
 	"time"
 
 	"github.com/kubeshop/kubtest-executor-postman/internal/pkg/postman/repository/result"
+	"github.com/kubeshop/kubtest-executor-postman/pkg/runner/newman"
 	"github.com/kubeshop/kubtest/pkg/api/kubtest"
 	"github.com/kubeshop/kubtest/pkg/log"
-	"github.com/kubeshop/kubtest/pkg/runner/newman"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.uber.org/zap"
 )
