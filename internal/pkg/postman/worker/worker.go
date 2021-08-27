@@ -6,8 +6,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/kubeshop/kubtest-executor-postamn/pkg/runner/newman"
 	"github.com/kubeshop/kubtest-executor-postman/internal/pkg/postman/repository/result"
+	"github.com/kubeshop/kubtest-executor-postman/pkg/runner/newman"
 	"github.com/kubeshop/kubtest/pkg/api/kubtest"
 	"github.com/kubeshop/kubtest/pkg/log"
 	"go.mongodb.org/mongo-driver/mongo"
