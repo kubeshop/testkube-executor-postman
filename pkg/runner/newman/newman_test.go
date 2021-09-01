@@ -14,7 +14,7 @@ import (
 // creates temporary server and check if call to the server was done from newman
 func TestRun(t *testing.T) {
 	// given
-	runner := &Runner{}
+	runner := &NewmanRunner{}
 
 	// and test server for getting newman responses
 	requestCompleted := false
