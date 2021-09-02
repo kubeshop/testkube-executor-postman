@@ -8,14 +8,14 @@ DATE ?= $(shell date -u --iso-8601=seconds)
 COMMIT ?= $(shell git log -1 --pretty=format:"%h")
 
 run-executor: 
-	POSTMANEXECUTOR_PORT=8082 go run cmd/postman-executor/main.go
+	EXECUTOR_PORT=8082 go run cmd/executor/main.go
 
 run-mongo-dev: 
 	docker run -p 27017:27017 mongo
 
 
 build: 
-	go build -o $(BIN_DIR)/postman-executor cmd/postman-executor/main.go
+	go build -o $(BIN_DIR)/postman-executor cmd/executor/main.go
 
 
 
@@ -23,7 +23,7 @@ build:
 # build done by vendoring to bypass private go repo problems
 docker-build-executor: 
 	go mod vendor
-	docker build --build-arg TOKEN=$(GITHUB_TOKEN) -t postman-executor -f build/postman-executor/Dockerfile .
+	docker build --build-arg TOKEN=$(GITHUB_TOKEN) -t postman-executor -f build/executor/Dockerfile .
 
 install-swagger-codegen-mac: 
 	brew install swagger-codegen

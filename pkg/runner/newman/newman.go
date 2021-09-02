@@ -3,27 +3,34 @@ package newman
 import (
 	"encoding/json"
 	"fmt"
-	"io"
 	"io/ioutil"
+	"strings"
 
 	"github.com/kubeshop/kubtest/pkg/api/kubtest"
 	"github.com/kubeshop/kubtest/pkg/process"
 	"github.com/kubeshop/kubtest/pkg/tmp"
 )
 
-// Runner struct for newman based runner
-type Runner struct {
+func NewNewmanRunner() *NewmanRunner {
+	return &NewmanRunner{}
+}
+
+// NewmanRunner struct for newman based runner
+type NewmanRunner struct {
 }
 
 // Run runs particular script content on top of newman binary
-func (r *Runner) Run(input io.Reader, params map[string]string) (result kubtest.ExecutionResult) {
+func (r *NewmanRunner) Run(execution kubtest.Execution) (result kubtest.ExecutionResult) {
+
+	input := strings.NewReader(execution.ScriptContent)
+
 	path, err := tmp.ReaderToTmpfile(input)
 	if err != nil {
 		return result.Err(err)
 	}
 
 	// write params to tmp file
-	envReader, err := NewEnvFileReader(params)
+	envReader, err := NewEnvFileReader(execution.Params)
 	if err != nil {
 		return result.Err(err)
 	}
