@@ -7,6 +7,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/kubeshop/kubtest/pkg/api/kubtest"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -25,10 +26,13 @@ func TestRun(t *testing.T) {
 
 	parts := strings.Split(ts.URL, ":")
 	port := parts[2]
-	buffer := strings.NewReader(fmt.Sprintf(exampleCollection, port, port))
+
+	execution := kubtest.Execution{
+		ScriptContent: fmt.Sprintf(exampleCollection, port, port),
+	}
 
 	// when
-	result := runner.Run(buffer, map[string]string{})
+	result := runner.Run(execution)
 
 	// then
 	assert.Empty(t, result.ErrorMessage)
