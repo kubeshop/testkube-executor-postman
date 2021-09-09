@@ -45,10 +45,10 @@ cover:
 version-bump: version-bump-patch
 
 version-bump-patch:
-	go run cmd/tools/versions.go bump -k patch
+	go run cmd/tools/main.go bump -k patch
 
 version-bump-minor:
-	go run cmd/tools/versions.go bump -k minor
+	go run cmd/tools/main.go bump -k minor
 
 version-bump-major:
-	go run cmd/tools/versions.go bump -k major
+	go run cmd/tools/main.go bump -k major
