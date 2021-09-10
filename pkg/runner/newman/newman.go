@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"os"
 	"strings"
 
 	"github.com/kubeshop/kubtest/pkg/api/kubtest"
@@ -42,7 +43,7 @@ func (r *NewmanRunner) Run(execution kubtest.Execution) (result kubtest.Executio
 	var newmanResult NewmanExecutionResult
 
 	tmpName := tmp.Name() + ".json"
-	out, err := process.Execute("newman", "run", path, "-e", envpath, "--reporters", "cli,json", "--reporter-json-export", tmpName)
+	out, err := process.LoggedExecuteInDir("", os.Stdout, "newman", "run", path, "-e", envpath, "--reporters", "cli,json", "--reporter-json-export", tmpName)
 	if err != nil {
 		return result.Err(err)
 	}
