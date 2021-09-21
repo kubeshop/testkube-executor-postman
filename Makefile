@@ -1,5 +1,5 @@
 .PHONY: test cover 
-
+NAME ?= kubtest/postman
 BIN_DIR ?= $(HOME)/bin
 GITHUB_TOKEN ?= "SET_ME"
 USER ?= $(USER)
@@ -17,13 +17,13 @@ run-mongo-dev:
 build: 
 	go build -o $(BIN_DIR)/postman-executor cmd/executor/main.go
 
-
-
-
 # build done by vendoring to bypass private go repo problems
 docker-build-executor: 
 	go mod vendor
 	docker build --build-arg TOKEN=$(GITHUB_TOKEN) -t postman-executor -f build/executor/Dockerfile .
+
+docker-build-agent: 
+	docker build -t $(NAME)-agent -f build/agent/Dockerfile .
 
 install-swagger-codegen-mac: 
 	brew install swagger-codegen
