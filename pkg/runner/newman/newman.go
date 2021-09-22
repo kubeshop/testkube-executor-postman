@@ -48,7 +48,7 @@ func (r *NewmanRunner) Run(execution kubtest.Execution) (result kubtest.Executio
 		return result.Err(err)
 	}
 
-	newmanResult.RawOutput = string(out)
+	newmanResult.Output = string(out)
 
 	// parse JSON output of newman script
 	bytes, err := ioutil.ReadFile(tmpName)
