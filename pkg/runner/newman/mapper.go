@@ -17,11 +17,11 @@ func MapMetadataToResult(newmanResult NewmanExecutionResult) kubtest.ExecutionRe
 	}
 
 	result := kubtest.ExecutionResult{
-		RawOutput:     newmanResult.RawOutput,
-		RawOutputType: "text/plain",
-		StartTime:     startTime,
-		EndTime:       endTime,
-		Status:        status,
+		Output:     newmanResult.Output,
+		OutputType: "text/plain",
+		StartTime:  startTime,
+		EndTime:    endTime,
+		Status:     status,
 	}
 
 	runHasFailedAssertions := false

@@ -36,7 +36,7 @@ func TestRun(t *testing.T) {
 
 	// then
 	assert.Empty(t, result.ErrorMessage)
-	assert.Contains(t, result.RawOutput, "Successful GET request")
+	assert.Contains(t, result.Output, "Successful GET request")
 	assert.Equal(t, requestCompleted, true)
 
 }
