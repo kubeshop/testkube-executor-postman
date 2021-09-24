@@ -3,7 +3,7 @@ package newman
 import (
 	"time"
 
-	"github.com/kubeshop/kubtest/pkg/api/kubtest"
+	"github.com/kubeshop/kubtest/pkg/api/v1/kubtest"
 )
 
 func MapMetadataToResult(newmanResult NewmanExecutionResult) kubtest.ExecutionResult {

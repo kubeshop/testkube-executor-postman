@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/kubeshop/kubtest/pkg/api/kubtest"
+	"github.com/kubeshop/kubtest/pkg/api/v1/kubtest"
 	"github.com/kubeshop/kubtest/pkg/process"
 	"github.com/kubeshop/kubtest/pkg/tmp"
 )
