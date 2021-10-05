@@ -1,5 +1,5 @@
 .PHONY: test cover 
-NAME ?= kubtest/postman
+NAME ?= postman
 BIN_DIR ?= $(HOME)/bin
 GITHUB_TOKEN ?= "SET_ME"
 USER ?= $(USER)
@@ -23,7 +23,7 @@ docker-build-executor:
 	docker build --build-arg TOKEN=$(GITHUB_TOKEN) -t postman-executor -f build/executor/Dockerfile .
 
 docker-build-runner: 
-	docker build -t $(NAME)-runner -f build/agent/Dockerfile .
+	docker build -t kubeshop/$(NAME)-runner -f build/agent/Dockerfile .
 
 install-swagger-codegen-mac: 
 	brew install swagger-codegen
