@@ -6,7 +6,7 @@ import (
 	"os"
 
 	"github.com/kubeshop/kubtest-executor-postman/pkg/runner/newman"
-	"github.com/kubeshop/kubtest/pkg/api/kubtest"
+	"github.com/kubeshop/kubtest/pkg/api/v1/kubtest"
 )
 
 func main() {

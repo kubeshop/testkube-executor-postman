@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/kubeshop/kubtest/pkg/api/kubtest"
+	"github.com/kubeshop/kubtest/pkg/api/v1/kubtest"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -36,7 +36,7 @@ func TestRun(t *testing.T) {
 
 	// then
 	assert.Empty(t, result.ErrorMessage)
-	assert.Contains(t, result.RawOutput, "Successful GET request")
+	assert.Contains(t, result.Output, "Successful GET request")
 	assert.Equal(t, requestCompleted, true)
 
 }

@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/kubeshop/kubtest/pkg/api/kubtest"
+	"github.com/kubeshop/kubtest/pkg/api/v1/kubtest"
 	"github.com/kubeshop/kubtest/pkg/process"
 	"github.com/kubeshop/kubtest/pkg/tmp"
 )
@@ -48,7 +48,7 @@ func (r *NewmanRunner) Run(execution kubtest.Execution) (result kubtest.Executio
 		return result.Err(err)
 	}
 
-	newmanResult.RawOutput = string(out)
+	newmanResult.Output = string(out)
 
 	// parse JSON output of newman script
 	bytes, err := ioutil.ReadFile(tmpName)

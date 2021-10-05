@@ -32,7 +32,7 @@ func TestMapNewmanMetadataToResult(t *testing.T) {
 	t.Run("check success result", func(t *testing.T) {
 
 		newmanResult := NewmanExecutionResult{
-			RawOutput: "some text result",
+			Output: "some text result",
 			Metadata: ExecutionJSONResult{
 				Run: Run{
 					Timings: RunTimings{
