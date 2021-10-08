@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help us improve Kubtest
+about: Create a report to help us improve testkube
 title: ''
 labels: kind/bug
 assignees: ''

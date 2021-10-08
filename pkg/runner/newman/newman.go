@@ -7,9 +7,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/kubeshop/kubtest/pkg/api/v1/kubtest"
-	"github.com/kubeshop/kubtest/pkg/process"
-	"github.com/kubeshop/kubtest/pkg/tmp"
+	"github.com/kubeshop/testkube/pkg/api/v1/testkube"
+	"github.com/kubeshop/testkube/pkg/process"
+	"github.com/kubeshop/testkube/pkg/tmp"
 )
 
 func NewNewmanRunner() *NewmanRunner {
@@ -21,7 +21,7 @@ type NewmanRunner struct {
 }
 
 // Run runs particular script content on top of newman binary
-func (r *NewmanRunner) Run(execution kubtest.Execution) (result kubtest.ExecutionResult) {
+func (r *NewmanRunner) Run(execution testkube.Execution) (result testkube.ExecutionResult) {
 
 	input := strings.NewReader(execution.ScriptContent)
 
