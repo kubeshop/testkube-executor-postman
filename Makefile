@@ -1,6 +1,7 @@
 .PHONY: test cover 
 NAME ?= postman
 
+CHART_NAME=postman-executor
 BIN_DIR ?= $(HOME)/bin
 GITHUB_TOKEN ?= "SET_ME"
 USER ?= $(USER)
