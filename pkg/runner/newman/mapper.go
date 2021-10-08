@@ -11,9 +11,9 @@ func MapMetadataToResult(newmanResult NewmanExecutionResult) testkube.ExecutionR
 	startTime := time.Unix(0, newmanResult.Metadata.Run.Timings.Started*int64(time.Millisecond))
 	endTime := time.Unix(0, newmanResult.Metadata.Run.Timings.Completed*int64(time.Millisecond))
 
-	status := "success"
+	status := testkube.StatusPtr(testkube.SUCCESS_ExecutionStatus)
 	if len(newmanResult.Metadata.Run.Failures) > 0 {
-		status = "failed"
+		status = testkube.StatusPtr(testkube.ERROR__ExecutionStatus)
 	}
 
 	result := testkube.ExecutionResult{
@@ -60,7 +60,7 @@ func MapMetadataToResult(newmanResult NewmanExecutionResult) testkube.ExecutionR
 	}
 
 	if runHasFailedAssertions {
-		result.Status = "failed"
+		result.Status = testkube.StatusPtr(testkube.ERROR__ExecutionStatus)
 	}
 
 	return result
