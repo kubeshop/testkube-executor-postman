@@ -36,7 +36,7 @@ jobs:
         id: meta_postman_executor
         uses: docker/metadata-action@v3
         with:
-          images: kubeshop/kubtest-postman-executor
+          images: kubeshop/testkube-postman-executor
           tags: |
             type=ref,event=branch
             type=ref,event=pr

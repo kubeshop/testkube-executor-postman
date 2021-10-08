@@ -1,7 +1,7 @@
 .PHONY: test cover 
 
 CHART_NAME=postman-executor
-NAME ?= kubtest/postman
+NAME ?= testkube/postman
 BIN_DIR ?= $(HOME)/bin
 GITHUB_TOKEN ?= "SET_ME"
 USER ?= $(USER)

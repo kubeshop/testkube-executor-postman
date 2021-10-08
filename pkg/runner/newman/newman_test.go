@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/kubeshop/kubtest/pkg/api/v1/kubtest"
+	"github.com/kubeshop/testkube/pkg/api/v1/testkube"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -27,7 +27,7 @@ func TestRun(t *testing.T) {
 	parts := strings.Split(ts.URL, ":")
 	port := parts[2]
 
-	execution := kubtest.Execution{
+	execution := testkube.Execution{
 		ScriptContent: fmt.Sprintf(exampleCollection, port, port),
 	}
 
@@ -45,7 +45,7 @@ const exampleCollection = `
 {
 	"info": {
 		"_postman_id": "3d9a6be2-bd3e-4cf7-89ca-354103aab4a7",
-		"name": "kubtest",
+		"name": "testkube",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
