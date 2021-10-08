@@ -1,7 +1,6 @@
 .PHONY: test cover 
+NAME ?= postman
 
-CHART_NAME=postman-executor
-NAME ?= testkube/postman
 BIN_DIR ?= $(HOME)/bin
 GITHUB_TOKEN ?= "SET_ME"
 USER ?= $(USER)
@@ -24,8 +23,8 @@ docker-build-executor:
 	go mod vendor
 	docker build --build-arg TOKEN=$(GITHUB_TOKEN) -t postman-executor -f build/executor/Dockerfile .
 
-docker-build-agent: 
-	docker build -t $(NAME)-agent -f build/agent/Dockerfile .
+docker-build-runner: 
+	docker build -t kubeshop/$(NAME)-runner -f build/agent/Dockerfile .
 
 install-swagger-codegen-mac: 
 	brew install swagger-codegen
