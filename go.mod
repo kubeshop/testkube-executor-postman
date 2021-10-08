@@ -7,6 +7,6 @@ go 1.16
 
 require (
 	github.com/kelseyhightower/envconfig v1.4.0
-	github.com/kubeshop/testkube v0.5.43
+	github.com/kubeshop/testkube v0.5.44
 	github.com/stretchr/testify v1.7.0
 )
