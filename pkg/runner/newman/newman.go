@@ -2,7 +2,6 @@ package newman
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"os"
 	"strings"
@@ -40,29 +39,38 @@ func (r *NewmanRunner) Run(execution testkube.Execution) (result testkube.Execut
 		return result.Err(err)
 	}
 
-	var newmanResult NewmanExecutionResult
-
 	tmpName := tmp.Name() + ".json"
 	out, err := process.LoggedExecuteInDir("", os.Stdout, "newman", "run", path, "-e", envpath, "--reporters", "cli,json", "--reporter-json-export", tmpName)
+
+	// try to get json result even if process returned error (could be invalid test)
+	newmanResult, nerr := r.GetNewmanResult(tmpName, out)
+	// convert newman result to OpenAPI struct
+	result = MapMetadataToResult(newmanResult)
+
 	if err != nil {
 		return result.Err(err)
 	}
 
+	if nerr != nil {
+		return result.Err(nerr)
+	}
+
+	return result
+}
+
+func (r NewmanRunner) GetNewmanResult(tmpName string, out []byte) (newmanResult NewmanExecutionResult, err error) {
 	newmanResult.Output = string(out)
 
 	// parse JSON output of newman script
 	bytes, err := ioutil.ReadFile(tmpName)
 	if err != nil {
-		return result.Err(err)
+		return newmanResult, err
 	}
 
 	err = json.Unmarshal(bytes, &newmanResult.Metadata)
 	if err != nil {
-		return result.Err(fmt.Errorf("parsing results metadata error: %w", err))
+		return newmanResult, err
 	}
 
-	// convert newman result to OpenAPI struct
-	res := MapMetadataToResult(newmanResult)
-
-	return res
+	return
 }
