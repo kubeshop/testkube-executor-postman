@@ -7,6 +7,7 @@ go 1.16
 
 require (
 	github.com/kelseyhightower/envconfig v1.4.0
-	github.com/kubeshop/testkube v0.6.1
+	// use beta for now until we merge everuthing together with job executors
+	github.com/kubeshop/testkube v0.6.4-beta1
 	github.com/stretchr/testify v1.7.0
 )

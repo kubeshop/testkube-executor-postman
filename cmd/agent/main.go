@@ -22,7 +22,7 @@ func main() {
 	e := testkube.Execution{}
 	json.Unmarshal([]byte(script), &e)
 	runner := newman.NewNewmanRunner()
-	result := runner.Run(e)
+	result, err := runner.Run(e)
 	fmt.Println(result)
 	fmt.Printf("$$$%s$$$", e.Id)
 }

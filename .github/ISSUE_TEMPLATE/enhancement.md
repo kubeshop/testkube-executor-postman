@@ -1,8 +1,8 @@
 ---
 name: Enhancement
-about: Suggest an enhancement to existing testkube functionality
+about: Suggest an enhancement to existing TestKube functionality
 title: ''
-labels: kind/enhancement
+labels: 'enhancement 🚀'
 assignees: ''
 
 ---
