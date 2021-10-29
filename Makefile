@@ -15,16 +15,7 @@ run-executor:
 run-mongo-dev: 
 	docker run -p 27017:27017 mongo
 
-
-build: 
-	go build -o $(BIN_DIR)/postman-executor cmd/executor/main.go
-
-# build done by vendoring to bypass private go repo problems
-docker-build-executor: 
-	go mod vendor
-	docker build --build-arg TOKEN=$(GITHUB_TOKEN) -t postman-executor -f build/executor/Dockerfile .
-
-docker-build-runner: 
+docker-build: 
 	docker build -t kubeshop/$(NAME)-runner -f build/agent/Dockerfile .
 
 install-swagger-codegen-mac: 
@@ -57,10 +48,3 @@ version-bump-major:
 
 version-bump-dev:
 	go run cmd/tools/main.go bump --dev
-
-prerelease: 
-	go run cmd/tools/main.go release -d -a $(CHART_NAME)
-
-release: 
-	go run cmd/tools/main.go release -a $(CHART_NAME)
-
