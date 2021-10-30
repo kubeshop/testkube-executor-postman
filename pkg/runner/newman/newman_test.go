@@ -22,6 +22,7 @@ func TestRun(t *testing.T) {
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		requestCompleted = true
 	}))
+
 	defer ts.Close()
 
 	parts := strings.Split(ts.URL, ":")
@@ -32,9 +33,10 @@ func TestRun(t *testing.T) {
 	}
 
 	// when
-	result := runner.Run(execution)
+	result, err := runner.Run(execution)
 
 	// then
+	assert.NoError(t, err)
 	assert.Empty(t, result.ErrorMessage)
 	assert.Contains(t, result.Output, "Successful GET request")
 	assert.Equal(t, requestCompleted, true)

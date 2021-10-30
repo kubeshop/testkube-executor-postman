@@ -1,6 +1,15 @@
+# syntax=docker/dockerfile:1
 FROM golang:1.17
-RUN apt update && apt install -y nodejs npm
-RUN npm install -g newman
-WORKDIR /
-ADD . /
-RUN go build -o /usr/local/bin/agent cmd/agent/main.go 
+WORKDIR /build
+COPY . .
+ENV CGO_ENABLED=0 
+ENV GOOS=linux
+
+RUN cd cmd/agent;go build -o /runner -mod mod -a .
+
+FROM postman/newman
+RUN apk --no-cache add ca-certificates
+WORKDIR /root/
+COPY --from=0 /runner /bin/runner
+EXPOSE 8082
+ENTRYPOINT ["/bin/runner"]
