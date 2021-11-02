@@ -18,7 +18,7 @@ Known vulnerabilities: ![testkube](https://snyk.io/test/github/kubeshop/testkube
                                                            
 # Welcome to testkube Postman Executor
 
-Kubetest Postman Executor is test executor for [testkube](https://testkube.io)
+Kubetest Postman Executor Job Agent [testkube](https://testkube.io)
 
 # Issues and enchancements 
 
@@ -26,12 +26,10 @@ Please follow to main testkube repository for reporting any [issues](https://git
 
 ## Details 
 
-- TODO write details
+Agent is wrapped as Kubernetes Job on new test execution.
+
+Input: JSON - testkube.Execution as input, and JSON structured log as output.
 
 ## Architecture
 
-- TODO add architecture diagrams
-
-## API 
-
-Postman executor implements [testkube OpenAPI for executors](https://kubeshop.github.io/testkube/openapi/#operations-tag-executor) (look at executor tag)
+Look at [architecture diagrams in docs](https://kubeshop.github.io/testkube/architecture/)
