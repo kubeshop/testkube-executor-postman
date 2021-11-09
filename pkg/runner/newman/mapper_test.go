@@ -2,8 +2,8 @@ package newman
 
 import (
 	"testing"
-	"time"
 
+	"github.com/kubeshop/testkube/pkg/api/v1/testkube"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -12,6 +12,7 @@ func TestMapNewmanMetadataToResult(t *testing.T) {
 	t.Run("timings", func(t *testing.T) {
 
 		newmanResult := NewmanExecutionResult{
+			Output: "output",
 			Metadata: ExecutionJSONResult{
 				Run: Run{
 					Timings: RunTimings{
@@ -25,8 +26,9 @@ func TestMapNewmanMetadataToResult(t *testing.T) {
 
 		result := MapMetadataToResult(newmanResult)
 
-		assert.Equal(t, time.Unix(0, int64(time.Millisecond)*1).String(), result.StartTime.String())
-		assert.Equal(t, time.Unix(0, int64(time.Millisecond)*60).String(), result.EndTime.String())
+		assert.Equal(t, testkube.SUCCESS_ExecutionStatus, *result.Status)
+		assert.Equal(t, newmanResult.Output, result.Output)
+		assert.Equal(t, "text/plain", result.OutputType)
 	})
 
 	t.Run("check success result", func(t *testing.T) {
