@@ -3,12 +3,10 @@ package newman
 import (
 	"encoding/json"
 	"io/ioutil"
-	"os"
 	"strings"
 
 	"github.com/kubeshop/testkube/pkg/api/v1/testkube"
-	"github.com/kubeshop/testkube/pkg/process"
-	"github.com/kubeshop/testkube/pkg/runner/output"
+	"github.com/kubeshop/testkube/pkg/executor"
 	"github.com/kubeshop/testkube/pkg/tmp"
 )
 
@@ -42,14 +40,14 @@ func (r *NewmanRunner) Run(execution testkube.Execution) (result testkube.Execut
 
 	tmpName := tmp.Name() + ".json"
 
-	// wrap stdout lines into JSON chunks we want it to have common interface for agent
-	// stdin <- testkube.Execution, stdout <- stream of json logs
-	// LoggedExecuteInDir will put wrapped JSON output to stdout AND get RAW output into out var
-	// json logs can be processed later on watch of pod logs
-	writer := output.NewJSONWrapWriter(os.Stdout)
+	args := []string{
+		"run", path, "-e", envpath, "--reporters", "cli,json", "--reporter-json-export", tmpName,
+	}
+	args = append(args, execution.Args...)
 
-	// we'll get error here in case of failed test too so we treat this as starter test execution with failed status
-	out, err := process.LoggedExecuteInDir("", writer, "newman", "run", path, "-e", envpath, "--reporters", "cli,json", "--reporter-json-export", tmpName)
+	// we'll get error here in case of failed test too so we treat this as
+	// starter test execution with failed status
+	out, err := executor.Run("", "newman", args...)
 
 	// try to get json result even if process returned error (could be invalid test)
 	newmanResult, nerr := r.GetNewmanResult(tmpName, out)
