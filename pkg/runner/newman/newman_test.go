@@ -29,7 +29,7 @@ func TestRun(t *testing.T) {
 	port := parts[2]
 
 	execution := testkube.Execution{
-		ScriptContent: fmt.Sprintf(exampleCollection, port, port),
+		Content: testkube.NewStringScriptContent(fmt.Sprintf(exampleCollection, port, port)),
 	}
 
 	// when
@@ -40,7 +40,6 @@ func TestRun(t *testing.T) {
 	assert.Empty(t, result.ErrorMessage)
 	assert.Contains(t, result.Output, "Successful GET request")
 	assert.Equal(t, requestCompleted, true)
-
 }
 
 const exampleCollection = `

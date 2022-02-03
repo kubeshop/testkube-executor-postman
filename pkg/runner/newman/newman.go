@@ -2,34 +2,42 @@ package newman
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
-	"strings"
 
 	"github.com/kubeshop/testkube/pkg/api/v1/testkube"
 	"github.com/kubeshop/testkube/pkg/executor"
+	"github.com/kubeshop/testkube/pkg/executor/content"
+	"github.com/kubeshop/testkube/pkg/executor/output"
 	"github.com/kubeshop/testkube/pkg/tmp"
 )
 
 func NewNewmanRunner() *NewmanRunner {
-	return &NewmanRunner{}
+	return &NewmanRunner{
+		Fetcher: content.NewFetcher(),
+	}
 }
 
 // NewmanRunner struct for newman based runner
 type NewmanRunner struct {
+	Fetcher content.ContentFetcher
 }
 
 // Run runs particular script content on top of newman binary
 func (r *NewmanRunner) Run(execution testkube.Execution) (result testkube.ExecutionResult, err error) {
 
-	input := strings.NewReader(execution.ScriptContent)
-
-	path, err := tmp.ReaderToTmpfile(input)
+	path, err := r.Fetcher.Fetch(execution.Content)
 	if err != nil {
 		return result, err
 	}
 
+	if !execution.Content.IsFile() {
+		output.PrintError(fmt.Errorf("unsupported content type use one of: file-uri, git-file, string"))
+		return
+	}
+
 	// write params to tmp file
-	envReader, err := NewEnvFileReader(execution.Params)
+	envReader, err := NewEnvFileReader(execution.Params, execution.ParamsFile)
 	if err != nil {
 		return result, err
 	}
