@@ -331,6 +331,8 @@ github.com/kubeshop/testkube v0.8.6-beta007 h1:lYV2S18Iq9KW3NBCCmaka1GyEpVYNfsBK
 github.com/kubeshop/testkube v0.8.6-beta007/go.mod h1:qIIMNhi7VEORFz/2jI8Plr+gu6sF536mFHVfVlUm9P8=
 github.com/kubeshop/testkube v0.8.6-beta009 h1:BmhCn9dL7W/uRj16svRwOufINF7LzFbCHAWQHsSgzH8=
 github.com/kubeshop/testkube v0.8.6-beta009/go.mod h1:qIIMNhi7VEORFz/2jI8Plr+gu6sF536mFHVfVlUm9P8=
+github.com/kubeshop/testkube v0.8.6-beta010 h1:I8WyjPJ7bsFC81ilto7JSMjJiw/d11e66kfWFf/c5QU=
+github.com/kubeshop/testkube v0.8.6-beta010/go.mod h1:qIIMNhi7VEORFz/2jI8Plr+gu6sF536mFHVfVlUm9P8=
 github.com/kubeshop/testkube-operator v0.9.2-beta003/go.mod h1:P1LXcaJEt1eVVrdRlDZip9mNHEP7cN64USQ6u/aCOeo=
 github.com/magiconair/properties v1.8.1/go.mod h1:PppfXfuXeibc/6YijjN8zIbojt8czPbwD3XqdrwzmxQ=
 github.com/magiconair/properties v1.8.5/go.mod h1:y3VJvCyxH9uVvJTWEGAELF3aiYNyPKd5NZ3oSwXrF60=
