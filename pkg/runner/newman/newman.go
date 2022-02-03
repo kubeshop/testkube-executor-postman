@@ -2,13 +2,11 @@ package newman
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 
 	"github.com/kubeshop/testkube/pkg/api/v1/testkube"
 	"github.com/kubeshop/testkube/pkg/executor"
 	"github.com/kubeshop/testkube/pkg/executor/content"
-	"github.com/kubeshop/testkube/pkg/executor/output"
 	"github.com/kubeshop/testkube/pkg/tmp"
 )
 
@@ -32,8 +30,7 @@ func (r *NewmanRunner) Run(execution testkube.Execution) (result testkube.Execut
 	}
 
 	if !execution.Content.IsFile() {
-		output.PrintError(fmt.Errorf("unsupported content type use one of: file-uri, git-file, string"))
-		return
+		return result, testkube.ErrScriptContentTypeNotFile
 	}
 
 	// write params to tmp file
