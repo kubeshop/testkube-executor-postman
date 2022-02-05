@@ -10,7 +10,7 @@ DATE ?= $(shell date -u --iso-8601=seconds)
 COMMIT ?= $(shell git log -1 --pretty=format:"%h")
 
 run-executor: 
-	EXECUTOR_PORT=8082 go run cmd/executor/main.go
+	EXECUTOR_PORT=8082 go run cmd/agent/main.go
 
 run-mongo-dev: 
 	docker run -p 27017:27017 mongo
