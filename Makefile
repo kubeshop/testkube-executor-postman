@@ -10,10 +10,13 @@ DATE ?= $(shell date -u --iso-8601=seconds)
 COMMIT ?= $(shell git log -1 --pretty=format:"%h")
 
 run-executor: 
-	EXECUTOR_PORT=8082 go run cmd/executor/main.go
+	EXECUTOR_PORT=8082 go run cmd/agent/main.go
 
 run-mongo-dev: 
 	docker run -p 27017:27017 mongo
+
+run-mongo-detached:
+	docker run -d -p 27017:27017 mongo
 
 docker-build: 
 	docker build -t kubeshop/$(NAME)-runner -f build/agent/Dockerfile .
