@@ -13,8 +13,11 @@ run-executor:
 	EXECUTOR_PORT=8082 go run cmd/agent/main.go
 
 run-mongo-dev: 
-	docker run -d --name mongodb -p 27017:27017 --rm mongo
+	docker run -p 27017:27017 mongo
 
+run-mongo-detached:
+	docker run -d --name mongodb -p 27017:27017 --rm mongo
+	
 docker-build: 
 	docker build -t kubeshop/$(NAME)-runner -f build/agent/Dockerfile .
 
