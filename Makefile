@@ -16,8 +16,8 @@ run-mongo-dev:
 	docker run -p 27017:27017 mongo
 
 run-mongo-detached:
-	docker run -d --name mongodb -p 27017:27017 --rm mongo
-	
+	docker run -d -p 27017:27017 mongo
+
 docker-build: 
 	docker build -t kubeshop/$(NAME)-runner -f build/agent/Dockerfile .
 
