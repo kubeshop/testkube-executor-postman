@@ -6,6 +6,6 @@ go 1.16
 
 require (
 	// use beta for now until we merge everything together with job executors
-	github.com/kubeshop/testkube v0.8.6-beta010
+	github.com/kubeshop/testkube v0.8.8
 	github.com/stretchr/testify v1.7.0
 )
