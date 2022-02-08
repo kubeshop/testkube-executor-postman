@@ -7,8 +7,18 @@ import (
 	"time"
 )
 
-func NewEnvFileReader(m map[string]string) (io.Reader, error) {
-	envFile := NewEnvFile(m)
+func NewEnvFileReader(m map[string]string, paramsFile string) (io.Reader, error) {
+	envFile := NewEnvFileFromMap(m)
+
+	if paramsFile != "" {
+		// create env structure from passed params file
+		envFromParamsFile, err := NewEnvFileFromString(paramsFile)
+		if err != nil {
+			return nil, err
+		}
+		envFile.PrependParams(envFromParamsFile)
+	}
+
 	b, err := json.Marshal(envFile)
 	if err != nil {
 		return nil, err
@@ -17,7 +27,7 @@ func NewEnvFileReader(m map[string]string) (io.Reader, error) {
 	return bytes.NewReader(b), err
 }
 
-func NewEnvFile(m map[string]string) (envFile EnvFile) {
+func NewEnvFileFromMap(m map[string]string) (envFile EnvFile) {
 	envFile.ID = "executor-env-file"
 	envFile.Name = "executor-env-file"
 	envFile.PostmanVariableScope = "environment"
@@ -31,6 +41,11 @@ func NewEnvFile(m map[string]string) (envFile EnvFile) {
 	return
 }
 
+func NewEnvFileFromString(f string) (envFile EnvFile, err error) {
+	err = json.Unmarshal([]byte(f), &envFile)
+	return
+}
+
 type EnvFile struct {
 	ID                   string    `json:"id"`
 	Name                 string    `json:"name"`
@@ -38,6 +53,13 @@ type EnvFile struct {
 	PostmanVariableScope string    `json:"_postman_variable_scope"`
 	PostmanExportedAt    time.Time `json:"_postman_exported_at"`
 	PostmanExportedUsing string    `json:"_postman_exported_using"`
+}
+
+// Prepend params adds Values from EnvFile on the beginning of array
+func (e *EnvFile) PrependParams(from EnvFile) {
+	vals := from.Values
+	vals = append(vals, e.Values...)
+	e.Values = vals
 }
 
 type Value struct {
