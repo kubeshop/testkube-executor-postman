@@ -29,7 +29,7 @@ func TestRun(t *testing.T) {
 	port := parts[2]
 
 	execution := testkube.Execution{
-		Content: testkube.NewStringScriptContent(fmt.Sprintf(exampleCollection, port, port)),
+		Content: testkube.NewStringTestContent(fmt.Sprintf(exampleCollection, port, port)),
 	}
 
 	// when
