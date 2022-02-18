@@ -1,8 +1,8 @@
-![Testkube Logo](https://raw.githubusercontent.com/kubeshop/testkube/main/assets/logo-dark-text-full.png)
+![Testkube Logo](https://raw.githubusercontent.com/kubeshop/testkube/main/assets/testkube-color-gray.png)
                                                            
 # Welcome to testkube Postman Executor
 
-Testkube Postman Executor Job Agent [testkube](https://testkube.io)
+Kubetest Postman Executor Job Agent [testkube](https://testkube.io)
 
 # Issues and enchancements 
 
