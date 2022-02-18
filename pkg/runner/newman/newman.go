@@ -21,7 +21,7 @@ type NewmanRunner struct {
 	Fetcher content.ContentFetcher
 }
 
-// Run runs particular script content on top of newman binary
+// Run runs particular test content on top of newman binary
 func (r *NewmanRunner) Run(execution testkube.Execution) (result testkube.ExecutionResult, err error) {
 
 	path, err := r.Fetcher.Fetch(execution.Content)
@@ -30,7 +30,7 @@ func (r *NewmanRunner) Run(execution testkube.Execution) (result testkube.Execut
 	}
 
 	if !execution.Content.IsFile() {
-		return result, testkube.ErrScriptContentTypeNotFile
+		return result, testkube.ErrTestContentTypeNotFile
 	}
 
 	// write params to tmp file
@@ -74,7 +74,7 @@ func (r *NewmanRunner) Run(execution testkube.Execution) (result testkube.Execut
 func (r NewmanRunner) GetNewmanResult(tmpName string, out []byte) (newmanResult NewmanExecutionResult, err error) {
 	newmanResult.Output = string(out)
 
-	// parse JSON output of newman script
+	// parse JSON output of newman test
 	bytes, err := ioutil.ReadFile(tmpName)
 	if err != nil {
 		return newmanResult, err
