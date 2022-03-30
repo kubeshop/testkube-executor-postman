@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func NewEnvFileReader(m map[string]string, paramsFile string, secrets []string) (io.Reader, error) {
+func NewEnvFileReader(m map[string]string, paramsFile string, secretEnvs []string) (io.Reader, error) {
 	envFile := NewEnvFileFromMap(m)
 
 	if paramsFile != "" {
@@ -19,9 +19,9 @@ func NewEnvFileReader(m map[string]string, paramsFile string, secrets []string) 
 		envFile.PrependParams(envFromParamsFile)
 	}
 
-	for _, secret := range secrets {
+	for _, secretEnv := range secretEnvs {
 		// create env structure from passed secret
-		envFromSecret, err := NewEnvFileFromString(secret)
+		envFromSecret, err := NewEnvFileFromString(secretEnv)
 		if err != nil {
 			return nil, err
 		}

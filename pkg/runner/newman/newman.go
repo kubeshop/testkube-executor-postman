@@ -90,17 +90,17 @@ func (r NewmanRunner) GetNewmanResult(tmpName string, out []byte) (newmanResult 
 	return
 }
 
-func getSecretEnvs() (secrets []string) {
+func getSecretEnvs() (secretEnvs []string) {
 	i := 1
 	for {
-		secret := os.Getenv(fmt.Sprintf("RUNNER_SECRET_VAR%d", i))
-		if secret == "" {
+		secretEnv := os.Getenv(fmt.Sprintf("RUNNER_SECRET_ENV%d", i))
+		if secretEnv == "" {
 			break
 		}
 
-		secrets = append(secrets, secret)
+		secretEnvs = append(secretEnvs, secretEnv)
 		i++
 	}
 
-	return secrets
+	return secretEnvs
 }
