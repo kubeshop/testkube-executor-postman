@@ -14,7 +14,7 @@ import (
 
 func NewNewmanRunner() *NewmanRunner {
 	return &NewmanRunner{
-		Fetcher: content.NewFetcher(),
+		Fetcher: content.NewFetcher(""),
 	}
 }
 
