@@ -26,7 +26,7 @@ func TestMapNewmanMetadataToResult(t *testing.T) {
 
 		result := MapMetadataToResult(newmanResult)
 
-		assert.Equal(t, testkube.SUCCESS_ExecutionStatus, *result.Status)
+		assert.Equal(t, testkube.PASSED_ExecutionStatus, *result.Status)
 		assert.Equal(t, newmanResult.Output, result.Output)
 		assert.Equal(t, "text/plain", result.OutputType)
 	})
@@ -48,7 +48,7 @@ func TestMapNewmanMetadataToResult(t *testing.T) {
 
 		result := MapMetadataToResult(newmanResult)
 
-		assert.Equal(t, "success", string(*result.Status), "no failures, expecting success status")
+		assert.Equal(t, "passed", string(*result.Status), "no failures, expecting success status")
 	})
 
 	t.Run("check for failures", func(t *testing.T) {
@@ -79,7 +79,7 @@ func TestMapNewmanMetadataToResult(t *testing.T) {
 
 		result := MapMetadataToResult(newmanResult)
 
-		assert.Equal(t, "error", string(*result.Status), "failure, expecting failed status")
+		assert.Equal(t, "failed", string(*result.Status), "failure, expecting failed status")
 	})
 
 	t.Run("steps mappings", func(t *testing.T) {
@@ -169,10 +169,10 @@ func TestMapNewmanMetadataToResult(t *testing.T) {
 
 		result := MapMetadataToResult(newmanResult)
 
-		assert.Equal(t, "error", string(*result.Status), "expecting failed status")
+		assert.Equal(t, "failed", string(*result.Status), "expecting failed status")
 		assert.Equal(t, "failed", result.Steps[0].Status)
 		assert.Equal(t, "failed", result.Steps[1].Status)
-		assert.Equal(t, "success", result.Steps[2].Status)
+		assert.Equal(t, "passed", result.Steps[2].Status)
 	})
 
 }

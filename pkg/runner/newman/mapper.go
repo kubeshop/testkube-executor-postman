@@ -7,9 +7,9 @@ import (
 )
 
 func MapMetadataToResult(newmanResult NewmanExecutionResult) testkube.ExecutionResult {
-	status := testkube.StatusPtr(testkube.SUCCESS_ExecutionStatus)
+	status := testkube.StatusPtr(testkube.PASSED_ExecutionStatus)
 	if len(newmanResult.Metadata.Run.Failures) > 0 {
-		status = testkube.StatusPtr(testkube.ERROR__ExecutionStatus)
+		status = testkube.StatusPtr(testkube.FAILED_ExecutionStatus)
 	}
 
 	result := testkube.ExecutionResult{
@@ -24,7 +24,7 @@ func MapMetadataToResult(newmanResult NewmanExecutionResult) testkube.ExecutionR
 		duration := time.Duration(execution.Response.ResponseTime) * time.Millisecond
 		step := testkube.ExecutionStepResult{
 			Name:     execution.Item.Name,
-			Status:   "success",
+			Status:   "passed",
 			Duration: duration.String(),
 		}
 
@@ -32,7 +32,7 @@ func MapMetadataToResult(newmanResult NewmanExecutionResult) testkube.ExecutionR
 		for _, assertion := range execution.Assertions {
 			assertionResult := testkube.AssertionResult{
 				Name:   assertion.Assertion,
-				Status: "success",
+				Status: "passed",
 			}
 
 			if assertion.Error != nil {
@@ -54,7 +54,7 @@ func MapMetadataToResult(newmanResult NewmanExecutionResult) testkube.ExecutionR
 	}
 
 	if runHasFailedAssertions {
-		result.Status = testkube.StatusPtr(testkube.ERROR__ExecutionStatus)
+		result.Status = testkube.StatusPtr(testkube.FAILED_ExecutionStatus)
 	}
 
 	return result
