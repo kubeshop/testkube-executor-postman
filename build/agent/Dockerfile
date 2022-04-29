@@ -8,7 +8,7 @@ ENV GOOS=linux
 RUN cd cmd/agent;go build -o /runner -mod mod -a .
 
 FROM postman/newman
-RUN apk --no-cache add ca-certificates
+RUN apk --no-cache add ca-certificates git
 WORKDIR /root/
 COPY --from=0 /runner /bin/runner
 EXPOSE 8082
