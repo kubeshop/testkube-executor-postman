@@ -36,7 +36,7 @@ func (r *NewmanRunner) Run(execution testkube.Execution) (result testkube.Execut
 	}
 
 	// write params to tmp file
-	envReader, err := NewEnvFileReader(execution.Params, execution.ParamsFile, getSecretEnvs())
+	envReader, err := NewEnvFileReader(execution.Variables, execution.VariablesFile, getSecretEnvs())
 	if err != nil {
 		return result, err
 	}
