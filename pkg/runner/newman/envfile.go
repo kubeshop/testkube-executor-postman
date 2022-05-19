@@ -5,10 +5,12 @@ import (
 	"encoding/json"
 	"io"
 	"time"
+
+	"github.com/kubeshop/testkube/pkg/api/v1/testkube"
 )
 
-func NewEnvFileReader(m map[string]string, paramsFile string, secretEnvs []string) (io.Reader, error) {
-	envFile := NewEnvFileFromMap(m)
+func NewEnvFileReader(m map[string]testkube.Variable, paramsFile string, secretEnvs []string) (io.Reader, error) {
+	envFile := NewEnvFileFromVariablesMap(m)
 
 	if paramsFile != "" {
 		// create env structure from passed params file
@@ -36,15 +38,15 @@ func NewEnvFileReader(m map[string]string, paramsFile string, secretEnvs []strin
 	return bytes.NewReader(b), err
 }
 
-func NewEnvFileFromMap(m map[string]string) (envFile EnvFile) {
+func NewEnvFileFromVariablesMap(m map[string]testkube.Variable) (envFile EnvFile) {
 	envFile.ID = "executor-env-file"
 	envFile.Name = "executor-env-file"
 	envFile.PostmanVariableScope = "environment"
 	envFile.PostmanExportedAt = time.Now()
-	envFile.PostmanExportedUsing = "Postman/7.34.0"
+	envFile.PostmanExportedUsing = "Postman/9.15.13"
 
-	for k, v := range m {
-		envFile.Values = append(envFile.Values, Value{Key: k, Value: v, Enabled: true})
+	for _, v := range m {
+		envFile.Values = append(envFile.Values, Value{Key: v.Name, Value: v.Value, Enabled: true})
 	}
 
 	return
