@@ -1,6 +1,6 @@
 module github.com/kubeshop/testkube-executor-postman
 
-go 1.17
+go 1.18
 
 // replace github.com/kubeshop/testkube v0.6.4 => ../testkube
 
