@@ -3,7 +3,6 @@ package newman
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"os"
 
 	"github.com/kubeshop/testkube/pkg/api/v1/testkube"
@@ -77,7 +76,7 @@ func (r NewmanRunner) GetNewmanResult(tmpName string, out []byte) (newmanResult 
 	newmanResult.Output = string(out)
 
 	// parse JSON output of newman test
-	bytes, err := ioutil.ReadFile(tmpName)
+	bytes, err := os.ReadFile(tmpName)
 	if err != nil {
 		return newmanResult, err
 	}
