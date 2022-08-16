@@ -5,25 +5,54 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/kelseyhightower/envconfig"
+
 	"github.com/kubeshop/testkube/pkg/api/v1/testkube"
 	"github.com/kubeshop/testkube/pkg/executor"
 	"github.com/kubeshop/testkube/pkg/executor/content"
 	"github.com/kubeshop/testkube/pkg/tmp"
 )
 
+// Params ...
+type Params struct {
+	Endpoint        string // RUNNER_ENDPOINT
+	AccessKeyID     string // RUNNER_ACCESSKEYID
+	SecretAccessKey string // RUNNER_SECRETACCESSKEY
+	Location        string // RUNNER_LOCATION
+	Token           string // RUNNER_TOKEN
+	Ssl             bool   // RUNNER_SSL
+	ScrapperEnabled bool   // RUNNER_SCRAPPERENABLED
+	GitUsername     string // RUNNER_GITUSERNAME
+	GitToken        string // RUNNER_GITTOKEN
+}
+
 func NewNewmanRunner() *NewmanRunner {
+	var params Params
+	err := envconfig.Process("runner", &params)
+	if err != nil {
+		panic(err.Error())
+	}
+
 	return &NewmanRunner{
+		Params:  params,
 		Fetcher: content.NewFetcher(""),
 	}
 }
 
 // NewmanRunner struct for newman based runner
 type NewmanRunner struct {
+	Params  Params
 	Fetcher content.ContentFetcher
 }
 
 // Run runs particular test content on top of newman binary
 func (r *NewmanRunner) Run(execution testkube.Execution) (result testkube.ExecutionResult, err error) {
+	if r.Params.GitUsername != "" && r.Params.GitToken != "" {
+		if execution.Content != nil && execution.Content.Repository != nil {
+			execution.Content.Repository.Username = r.Params.GitUsername
+			execution.Content.Repository.Token = r.Params.GitToken
+		}
+	}
 
 	path, err := r.Fetcher.Fetch(execution.Content)
 	if err != nil {
