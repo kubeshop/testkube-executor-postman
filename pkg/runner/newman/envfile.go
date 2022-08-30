@@ -46,22 +46,9 @@ func NewEnvFileFromVariablesMap(m map[string]testkube.Variable) (envFile EnvFile
 	envFile.PostmanExportedAt = time.Now()
 	envFile.PostmanExportedUsing = "Postman/9.15.13"
 
-	var vars []string
+	secret.NewEnvManager().GetVars(m)
 	for _, v := range m {
-		if v.Type_ == testkube.VariableTypeSecret && v.SecretRef != nil {
-			vars = append(vars, v.Name)
-		}
-	}
-
-	manager := secret.NewEnvManager()
-	secretVars := manager.GetVars(vars)
-	for _, v := range m {
-		value := v.Value
-		if secretValue, ok := secretVars[v.Name]; ok {
-			value = secretValue
-		}
-
-		envFile.Values = append(envFile.Values, Value{Key: v.Name, Value: value, Enabled: true})
+		envFile.Values = append(envFile.Values, Value{Key: v.Name, Value: v.Value, Enabled: true})
 	}
 
 	return
