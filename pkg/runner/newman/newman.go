@@ -2,7 +2,6 @@ package newman
 
 import (
 	"encoding/json"
-	"fmt"
 	"os"
 
 	"github.com/kelseyhightower/envconfig"
@@ -10,6 +9,7 @@ import (
 	"github.com/kubeshop/testkube/pkg/api/v1/testkube"
 	"github.com/kubeshop/testkube/pkg/executor"
 	"github.com/kubeshop/testkube/pkg/executor/content"
+	"github.com/kubeshop/testkube/pkg/executor/secret"
 	"github.com/kubeshop/testkube/pkg/tmp"
 )
 
@@ -64,7 +64,7 @@ func (r *NewmanRunner) Run(execution testkube.Execution) (result testkube.Execut
 	}
 
 	// write params to tmp file
-	envReader, err := NewEnvFileReader(execution.Variables, execution.VariablesFile, getSecretEnvs())
+	envReader, err := NewEnvFileReader(execution.Variables, execution.VariablesFile, secret.NewEnvManager().GetEnvs())
 	if err != nil {
 		return result, err
 	}
@@ -116,19 +116,4 @@ func (r NewmanRunner) GetNewmanResult(tmpName string, out []byte) (newmanResult 
 	}
 
 	return
-}
-
-func getSecretEnvs() (secretEnvs []string) {
-	i := 1
-	for {
-		secretEnv := os.Getenv(fmt.Sprintf("RUNNER_SECRET_ENV%d", i))
-		if secretEnv == "" {
-			break
-		}
-
-		secretEnvs = append(secretEnvs, secretEnv)
-		i++
-	}
-
-	return secretEnvs
 }
