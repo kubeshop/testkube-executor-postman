@@ -2,6 +2,7 @@ package newman
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 
 	"github.com/kelseyhightower/envconfig"
@@ -61,6 +62,12 @@ func (r *NewmanRunner) Run(execution testkube.Execution) (result testkube.Execut
 
 	if !execution.Content.IsFile() {
 		return result, testkube.ErrTestContentTypeNotFile
+	}
+
+	// add configuration files
+	err = content.PlaceFiles(execution.CopyFiles)
+	if err != nil {
+		return result.Err(fmt.Errorf("could not place config files: %w", err)), nil
 	}
 
 	// write params to tmp file
