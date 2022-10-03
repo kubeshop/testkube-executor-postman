@@ -37,6 +37,12 @@ github.com/kubeshop/testkube v1.5.34-0.20220926120145-baf67504fd44 h1:yrQJF0Eri5
 github.com/kubeshop/testkube v1.5.34-0.20220926120145-baf67504fd44/go.mod h1:t/mHh2Ym05pscwzezyWMaTj7RgGBAcVaS2vm17kEHco=
 github.com/kubeshop/testkube v1.5.34 h1:YrOgrK+3zoWYpQErgubcEsXPIXedCzflS7ZLyQfdcN8=
 github.com/kubeshop/testkube v1.5.34/go.mod h1:OFiywHE4SCf6iEhEUxdh2F4m4HJU+KigJfySpG8HXms=
+github.com/kubeshop/testkube v1.5.45-0.20221003184025-e47dc5f85280 h1:ngmRf+VPSr3UyNDJLUtmi5mCOZFPwM9cGUWnYCEuPsw=
+github.com/kubeshop/testkube v1.5.45-0.20221003184025-e47dc5f85280/go.mod h1:gFrI4MDmaoeunXQ7+vu+W+j8HddaRBMUb1A2gHSeWlg=
+github.com/kubeshop/testkube v1.5.45-0.20221003190318-210607c6668f h1:44LIkiy/mhvs1tN5miuzP/OT6AkwvrhmQ/ogYtkUCI0=
+github.com/kubeshop/testkube v1.5.45-0.20221003190318-210607c6668f/go.mod h1:gFrI4MDmaoeunXQ7+vu+W+j8HddaRBMUb1A2gHSeWlg=
+github.com/kubeshop/testkube v1.5.45-0.20221003190910-88dee99c67ad h1:4xA0vGMBz3y4IVzZ8mwBrQdW0Ab/FIMJ6Y+St7x7kVo=
+github.com/kubeshop/testkube v1.5.45-0.20221003190910-88dee99c67ad/go.mod h1:gFrI4MDmaoeunXQ7+vu+W+j8HddaRBMUb1A2gHSeWlg=
 github.com/mattn/go-runewidth v0.0.9/go.mod h1:H031xJmbD/WCDINGzjvQ9THkh0rPKHF+m2gUSrubnMI=
 github.com/mattn/go-runewidth v0.0.14 h1:+xnbZSEeDbOIg5/mE6JF0w6n9duR1l3/WmbinWVwUuU=
 github.com/mattn/go-runewidth v0.0.14/go.mod h1:Jdepj2loyihRzMpdS35Xk/zdY8IAYHsh153qUoGf23w=
