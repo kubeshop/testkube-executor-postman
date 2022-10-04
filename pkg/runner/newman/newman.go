@@ -70,8 +70,9 @@ func (r *NewmanRunner) Run(execution testkube.Execution) (result testkube.Execut
 		return result.Err(fmt.Errorf("could not place config files: %w", err)), nil
 	}
 
+	envManager := secret.NewEnvManagerWithVars(execution.Variables)
 	// write params to tmp file
-	envReader, err := NewEnvFileReader(execution.Variables, execution.VariablesFile, secret.NewEnvManager().GetEnvs())
+	envReader, err := NewEnvFileReader(execution.Variables, execution.VariablesFile, envManager.GetEnvs())
 	if err != nil {
 		return result, err
 	}
@@ -89,7 +90,9 @@ func (r *NewmanRunner) Run(execution testkube.Execution) (result testkube.Execut
 
 	// we'll get error here in case of failed test too so we treat this as
 	// starter test execution with failed status
-	out, err := executor.Run("", "newman", args...)
+	out, err := executor.Run("", "newman", envManager, args...)
+
+	out = envManager.Obfuscate(out)
 
 	// try to get json result even if process returned error (could be invalid test)
 	newmanResult, nerr := r.GetNewmanResult(tmpName, out)
