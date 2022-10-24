@@ -81,9 +81,14 @@ func (r *NewmanRunner) Run(execution testkube.Execution) (result testkube.Execut
 	}
 	args = append(args, execution.Args...)
 
+	runPath := ""
+	if execution.Content.Repository != nil {
+		runPath = execution.Content.Repository.WorkingDir
+	}
+
 	// we'll get error here in case of failed test too so we treat this as
 	// starter test execution with failed status
-	out, err := executor.Run("", "newman", envManager, args...)
+	out, err := executor.Run(runPath, "newman", envManager, args...)
 
 	out = envManager.Obfuscate(out)
 
