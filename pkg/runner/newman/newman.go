@@ -3,6 +3,7 @@ package newman
 import (
 	"encoding/json"
 	"os"
+	"path/filepath"
 
 	"github.com/kelseyhightower/envconfig"
 
@@ -24,6 +25,7 @@ type Params struct {
 	ScrapperEnabled bool   // RUNNER_SCRAPPERENABLED
 	GitUsername     string // RUNNER_GITUSERNAME
 	GitToken        string // RUNNER_GITTOKEN
+	DataDir         string // RUNNER_DATADIR
 }
 
 func NewNewmanRunner() *NewmanRunner {
@@ -81,9 +83,14 @@ func (r *NewmanRunner) Run(execution testkube.Execution) (result testkube.Execut
 	}
 	args = append(args, execution.Args...)
 
+	runPath := ""
+	if execution.Content.Repository != nil && execution.Content.Repository.WorkingDir != "" {
+		runPath = filepath.Join(r.Params.DataDir, "repo", execution.Content.Repository.WorkingDir)
+	}
+
 	// we'll get error here in case of failed test too so we treat this as
 	// starter test execution with failed status
-	out, err := executor.Run("", "newman", envManager, args...)
+	out, err := executor.Run(runPath, "newman", envManager, args...)
 
 	out = envManager.Obfuscate(out)
 
