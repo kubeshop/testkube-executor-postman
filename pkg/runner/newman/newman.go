@@ -84,7 +84,7 @@ func (r *NewmanRunner) Run(execution testkube.Execution) (result testkube.Execut
 	args = append(args, execution.Args...)
 
 	runPath := ""
-	if execution.Content.Repository != nil {
+	if execution.Content.Repository != nil && execution.Content.Repository.WorkingDir != "" {
 		runPath = filepath.Join(r.Params.DataDir, "repo", execution.Content.Repository.WorkingDir)
 	}
 
