@@ -27,7 +27,7 @@ func NewEnvFileReader(m map[string]testkube.Variable, paramsFile string, secretE
 		// create env structure from passed secret
 		envFromSecret, err := NewEnvFileFromString(secretEnv)
 		if err != nil {
-			output.PrintEvent("skip secret env for env file", envName)
+			output.PrintEvent("skipping secret env for env file", envName)
 			continue
 		}
 
