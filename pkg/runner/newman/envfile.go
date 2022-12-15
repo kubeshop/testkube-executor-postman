@@ -7,10 +7,11 @@ import (
 	"time"
 
 	"github.com/kubeshop/testkube/pkg/api/v1/testkube"
+	"github.com/kubeshop/testkube/pkg/executor/output"
 	"github.com/kubeshop/testkube/pkg/executor/secret"
 )
 
-func NewEnvFileReader(m map[string]testkube.Variable, paramsFile string, secretEnvs []string) (io.Reader, error) {
+func NewEnvFileReader(m map[string]testkube.Variable, paramsFile string, secretEnvs map[string]string) (io.Reader, error) {
 	envFile := NewEnvFileFromVariablesMap(m)
 
 	if paramsFile != "" {
@@ -22,12 +23,14 @@ func NewEnvFileReader(m map[string]testkube.Variable, paramsFile string, secretE
 		envFile.PrependParams(envFromParamsFile)
 	}
 
-	for _, secretEnv := range secretEnvs {
+	for envName, secretEnv := range secretEnvs {
 		// create env structure from passed secret
 		envFromSecret, err := NewEnvFileFromString(secretEnv)
 		if err != nil {
-			return nil, err
+			output.PrintEvent("skip secret env for env file", envName)
+			continue
 		}
+
 		envFile.PrependParams(envFromSecret)
 	}
 
