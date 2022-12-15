@@ -10,6 +10,7 @@ import (
 	"github.com/kubeshop/testkube/pkg/api/v1/testkube"
 	"github.com/kubeshop/testkube/pkg/executor"
 	"github.com/kubeshop/testkube/pkg/executor/content"
+	"github.com/kubeshop/testkube/pkg/executor/runner"
 	"github.com/kubeshop/testkube/pkg/executor/secret"
 	"github.com/kubeshop/testkube/pkg/tmp"
 )
@@ -49,7 +50,7 @@ type NewmanRunner struct {
 
 // Run runs particular test content on top of newman binary
 func (r *NewmanRunner) Run(execution testkube.Execution) (result testkube.ExecutionResult, err error) {
-	if r.Params.GitUsername != "" && r.Params.GitToken != "" {
+	if r.Params.GitUsername != "" || r.Params.GitToken != "" {
 		if execution.Content != nil && execution.Content.Repository != nil {
 			execution.Content.Repository.Username = r.Params.GitUsername
 			execution.Content.Repository.Token = r.Params.GitToken
@@ -126,4 +127,9 @@ func (r NewmanRunner) GetNewmanResult(tmpName string, out []byte) (newmanResult 
 	}
 
 	return
+}
+
+// GetType returns runner type
+func (r NewmanRunner) GetType() runner.Type {
+	return runner.TypeMain
 }
