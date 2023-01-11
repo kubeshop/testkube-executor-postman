@@ -6,7 +6,7 @@ go 1.18
 
 require (
 	// use beta for now until we merge everything together with job executors
-	github.com/kubeshop/testkube v1.8.14
+	github.com/kubeshop/testkube v1.8.17-0.20230110143037-d9256136a9fe
 	github.com/stretchr/testify v1.8.1
 )
 
@@ -35,7 +35,7 @@ require (
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/compress v1.15.12 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.1 // indirect
-	github.com/kubeshop/testkube-operator v1.8.2 // indirect
+	github.com/kubeshop/testkube-operator v1.8.3 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mattn/go-runewidth v0.0.14 // indirect
 	github.com/minio/md5-simd v1.1.2 // indirect

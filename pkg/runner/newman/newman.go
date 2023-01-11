@@ -2,17 +2,19 @@ package newman
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 	"path/filepath"
 
-	"github.com/kelseyhightower/envconfig"
-
 	"github.com/kubeshop/testkube/pkg/api/v1/testkube"
+	"github.com/kubeshop/testkube/pkg/envs"
 	"github.com/kubeshop/testkube/pkg/executor"
 	"github.com/kubeshop/testkube/pkg/executor/content"
+	"github.com/kubeshop/testkube/pkg/executor/output"
 	"github.com/kubeshop/testkube/pkg/executor/runner"
 	"github.com/kubeshop/testkube/pkg/executor/secret"
 	"github.com/kubeshop/testkube/pkg/tmp"
+	"github.com/kubeshop/testkube/pkg/ui"
 )
 
 // Params ...
@@ -29,27 +31,29 @@ type Params struct {
 	DataDir         string // RUNNER_DATADIR
 }
 
-func NewNewmanRunner() *NewmanRunner {
-	var params Params
-	err := envconfig.Process("runner", &params)
+func NewNewmanRunner() (*NewmanRunner, error) {
+	output.PrintLog(fmt.Sprintf("%s Preparing test runner", ui.IconTruck))
+	params, err := envs.LoadTestkubeVariables()
 	if err != nil {
-		panic(err.Error())
+		return nil, fmt.Errorf("could not initialize Artillery runner variables: %w", err)
 	}
 
 	return &NewmanRunner{
 		Params:  params,
 		Fetcher: content.NewFetcher(""),
-	}
+	}, nil
 }
 
 // NewmanRunner struct for newman based runner
 type NewmanRunner struct {
-	Params  Params
+	Params  envs.Params
 	Fetcher content.ContentFetcher
 }
 
 // Run runs particular test content on top of newman binary
 func (r *NewmanRunner) Run(execution testkube.Execution) (result testkube.ExecutionResult, err error) {
+	output.PrintLog(fmt.Sprintf("%s Preparing for test run", ui.IconTruck))
+
 	if r.Params.GitUsername != "" || r.Params.GitToken != "" {
 		if execution.Content != nil && execution.Content.Repository != nil {
 			execution.Content.Repository.Username = r.Params.GitUsername
@@ -98,8 +102,14 @@ func (r *NewmanRunner) Run(execution testkube.Execution) (result testkube.Execut
 
 	// try to get json result even if process returned error (could be invalid test)
 	newmanResult, nerr := r.GetNewmanResult(tmpName, out)
+	if nerr != nil {
+		output.PrintLog(fmt.Sprintf("%s Could not get Newman result: %s", ui.IconCross, nerr.Error()))
+	} else {
+		output.PrintLog(fmt.Sprintf("%s Got Newman result successfully", ui.IconCheckMark))
+	}
 	// convert newman result to OpenAPI struct
 	result = MapMetadataToResult(newmanResult)
+	output.PrintLog(fmt.Sprintf("%s Mapped Newman result successfully", ui.IconCheckMark))
 
 	// catch errors if any
 	if err != nil {
