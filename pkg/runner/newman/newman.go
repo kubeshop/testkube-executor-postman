@@ -17,20 +17,6 @@ import (
 	"github.com/kubeshop/testkube/pkg/ui"
 )
 
-// Params ...
-type Params struct {
-	Endpoint        string // RUNNER_ENDPOINT
-	AccessKeyID     string // RUNNER_ACCESSKEYID
-	SecretAccessKey string // RUNNER_SECRETACCESSKEY
-	Location        string // RUNNER_LOCATION
-	Token           string // RUNNER_TOKEN
-	Ssl             bool   // RUNNER_SSL
-	ScrapperEnabled bool   // RUNNER_SCRAPPERENABLED
-	GitUsername     string // RUNNER_GITUSERNAME
-	GitToken        string // RUNNER_GITTOKEN
-	DataDir         string // RUNNER_DATADIR
-}
-
 func NewNewmanRunner() (*NewmanRunner, error) {
 	output.PrintLog(fmt.Sprintf("%s Preparing test runner", ui.IconTruck))
 	params, err := envs.LoadTestkubeVariables()
@@ -113,11 +99,11 @@ func (r *NewmanRunner) Run(execution testkube.Execution) (result testkube.Execut
 
 	// catch errors if any
 	if err != nil {
-		return result.Err(err), nil
+		return *result.Err(err), nil
 	}
 
 	if nerr != nil {
-		return result.Err(nerr), nil
+		return *result.Err(nerr), nil
 	}
 
 	return result, nil
