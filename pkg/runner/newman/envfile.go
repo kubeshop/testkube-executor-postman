@@ -23,11 +23,27 @@ func NewEnvFileReader(m map[string]testkube.Variable, paramsFile string, secretE
 		envFile.PrependParams(envFromParamsFile)
 	}
 
+	// Deprecated: use Secret Variable instead
 	for envName, secretEnv := range secretEnvs {
 		// create env structure from passed secret
 		envFromSecret, err := NewEnvFileFromString(secretEnv)
 		if err != nil {
 			output.PrintEvent("skipping secret env for env file", envName)
+			continue
+		}
+
+		envFile.PrependParams(envFromSecret)
+	}
+
+	for name, variable := range m {
+		if !variable.IsSecret() {
+			continue
+		}
+
+		// create env structure from passed secret
+		envFromSecret, err := NewEnvFileFromString(variable.Value)
+		if err != nil {
+			output.PrintEvent("skipping secret variable for env file", name)
 			continue
 		}
 
@@ -51,6 +67,10 @@ func NewEnvFileFromVariablesMap(m map[string]testkube.Variable) (envFile EnvFile
 
 	secret.NewEnvManager().GetVars(m)
 	for _, v := range m {
+		if v.IsSecret() {
+			continue
+		}
+
 		envFile.Values = append(envFile.Values, Value{Key: v.Name, Value: v.Value, Enabled: true})
 	}
 
