@@ -7,8 +7,8 @@ import (
 	"time"
 
 	"github.com/kubeshop/testkube/pkg/api/v1/testkube"
+	"github.com/kubeshop/testkube/pkg/executor/env"
 	"github.com/kubeshop/testkube/pkg/executor/output"
-	"github.com/kubeshop/testkube/pkg/executor/secret"
 )
 
 func NewEnvFileReader(m map[string]testkube.Variable, paramsFile string, secretEnvs map[string]string) (io.Reader, error) {
@@ -65,7 +65,7 @@ func NewEnvFileFromVariablesMap(m map[string]testkube.Variable) (envFile EnvFile
 	envFile.PostmanExportedAt = time.Now()
 	envFile.PostmanExportedUsing = "Postman/9.15.13"
 
-	secret.NewEnvManager().GetVars(m)
+	env.NewManager().GetReferenceVars(m)
 	for _, v := range m {
 		if v.IsSecret() {
 			continue
