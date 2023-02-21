@@ -10,9 +10,9 @@ import (
 	"github.com/kubeshop/testkube/pkg/envs"
 	"github.com/kubeshop/testkube/pkg/executor"
 	"github.com/kubeshop/testkube/pkg/executor/content"
+	"github.com/kubeshop/testkube/pkg/executor/env"
 	"github.com/kubeshop/testkube/pkg/executor/output"
 	"github.com/kubeshop/testkube/pkg/executor/runner"
-	"github.com/kubeshop/testkube/pkg/executor/secret"
 	"github.com/kubeshop/testkube/pkg/tmp"
 	"github.com/kubeshop/testkube/pkg/ui"
 )
@@ -56,10 +56,10 @@ func (r *NewmanRunner) Run(execution testkube.Execution) (result testkube.Execut
 		return result, testkube.ErrTestContentTypeNotFile
 	}
 
-	envManager := secret.NewEnvManagerWithVars(execution.Variables)
-	envManager.GetVars(envManager.Variables)
+	envManager := env.NewManagerWithVars(execution.Variables)
+	envManager.GetReferenceVars(envManager.Variables)
 	// write params to tmp file
-	envReader, err := NewEnvFileReader(envManager.Variables, execution.VariablesFile, envManager.GetEnvs())
+	envReader, err := NewEnvFileReader(envManager.Variables, execution.VariablesFile, envManager.GetSecretEnvs())
 	if err != nil {
 		return result, err
 	}
@@ -84,7 +84,7 @@ func (r *NewmanRunner) Run(execution testkube.Execution) (result testkube.Execut
 	// starter test execution with failed status
 	out, err := executor.Run(runPath, "newman", envManager, args...)
 
-	out = envManager.Obfuscate(out)
+	out = envManager.ObfuscateSecrets(out)
 
 	// try to get json result even if process returned error (could be invalid test)
 	newmanResult, nerr := r.GetNewmanResult(tmpName, out)
