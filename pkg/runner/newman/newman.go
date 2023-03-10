@@ -26,7 +26,7 @@ func NewNewmanRunner() (*NewmanRunner, error) {
 
 	return &NewmanRunner{
 		Params:  params,
-		Fetcher: content.NewFetcher(""),
+		Fetcher: content.NewFetcher(params.DataDir),
 	}, nil
 }
 
