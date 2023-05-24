@@ -1,6 +1,6 @@
 # DEPRECATED
 
-This executor was moved into [Testkube](https://github.com/kubeshop/testkube/tree/develop/contrib/executor/postman).
+This executor was moved into [Testkube](https://github.com/kubeshop/testkube/tree/develop/contrib/executor/postman) repository.
 
 ![Testkube Logo](https://raw.githubusercontent.com/kubeshop/testkube/main/assets/testkube-color-gray.png)
                                                            
